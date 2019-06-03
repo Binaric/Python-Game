@@ -141,4 +141,76 @@ time.sleep(1)
 end = Rectangle(Point(0,0), Point(1600,900))
 end.setFill("white")
 end.draw(win)
+time.sleep(2)
+
+title = Text(Point(800, 300),"Welcome.")
+title.setSize(36)
+title.setFace("courier")
+title.draw(win)
+
+time.sleep(3)
+
+title.undraw()
+text1 = Text(Point(800, 300),"This is a story about \n a character named Violet \n and her journey to uncover \n the secrets of the 7 sins.")
+text1.setSize(16)
+text1.setFace("courier")
+text1.draw(win)
+
+time.sleep(1)
+
+violet1 = Image(Point(600, 0), "violet.png")
+
+violet1.draw(win)
+for i in range (0,10):
+    violet1.move(0, 40)
+    update(45)
+
+time.sleep(4)
+
+text1.undraw()
+text2 = Text(Point(800, 300),"Made by Franku-San no Felix-San Studios...")
+text2.setSize(24)
+text2.setFace("courier")
+text2.draw(win)
+violet1.undraw()
+logo = Image(Point(600, 0), "Senpai.png")
+logo.draw(win)
+for i in range (0,20):
+    logo.move(0, 40)
+    update(45)
+
+time.sleep(2)
+
+text2.undraw()
+title1 = Text(Point(800, 300),"THE EIGHTH SIN")
+title1.setSize(36)
+title1.setStyle("bold italic")
+title1.setFace("courier")
+title1.draw(win)
+
+textButton = Text(Point(320, 240), "Press to start.")
+textButton.setSize(24)
+textButton.setTextColor("white")
+textButton.setFace("arial")
+textBox = Rectangle(Point(158, 200), Point(474, 300))
+textBox.setFill("black")
+textBox.draw(win)
+textButton.draw(win)
+
+start = False
+while start == False:
+    buttonClicked = win.checkMouse()
+    if buttonClicked:
+        if buttonClicked.getX() >= 158:
+            if buttonClicked.getX() <= 474:
+                if buttonClicked.getY() >= 200:
+                    if buttonClicked.getY() <= 300:
+                        start = True
+                        break
+
+if start == True:
+    win.close()
+    win = GraphWin("The Eighth Sin", 1600,900)
+
+
 
