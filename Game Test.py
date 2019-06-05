@@ -181,6 +181,7 @@ for i in range (0,20):
 
 time.sleep(2)
 
+logo.undraw()
 text2.undraw()
 title1 = Text(Point(800, 300),"THE EIGHTH SIN")
 title1.setSize(36)
@@ -188,11 +189,11 @@ title1.setStyle("bold italic")
 title1.setFace("courier")
 title1.draw(win)
 
-textButton = Text(Point(320, 240), "Press to start.")
+textButton = Text(Point(800, 500), "Press to start.")
 textButton.setSize(24)
 textButton.setTextColor("white")
-textButton.setFace("arial")
-textBox = Rectangle(Point(158, 200), Point(474, 300))
+textButton.setFace("courier")
+textBox = Rectangle(Point(600, 400), Point(1000, 600))
 textBox.setFill("black")
 textBox.draw(win)
 textButton.draw(win)
@@ -201,16 +202,15 @@ start = False
 while start == False:
     buttonClicked = win.checkMouse()
     if buttonClicked:
-        if buttonClicked.getX() >= 158:
-            if buttonClicked.getX() <= 474:
-                if buttonClicked.getY() >= 200:
-                    if buttonClicked.getY() <= 300:
+        if buttonClicked.getX() >= 600:
+            if buttonClicked.getX() <= 1000:
+                if buttonClicked.getY() >= 400:
+                    if buttonClicked.getY() <= 600:
                         start = True
                         break
 
 if start == True:
     win.close()
-    win = GraphWin("The Eighth Sin", 1600,900)
-
+    
 
 
