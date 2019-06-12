@@ -2,6 +2,7 @@ from graphics import *
 import pygame
 import random
 import time
+import os
 
 def drawAll(shapes):
     for shape in shapes:
@@ -9,14 +10,90 @@ def drawAll(shapes):
 def undrawAll(shapes):
     for shape in shapes:
         shape.undraw()
-def colorAll(color, shapes):
+def colorAll(shapes, color):
     for shape in shapes:
         shape.setFill(color)
 def outAll(color, shapes):
     for shape in shapes:
         shape.setOutline(color)
-        
+def playSound(filename):
+    pygame.mixer.init()
+    pygame.mixer.music.load(filename)
+    pygame.mixer.music.play()
+def mBall():
+    blast = Circle(Point(375,600),50)
+    blast.setFill("aqua")
+    blast.draw(win)
+    playSound("magicball.mp3")
+    for i in range (105):
+        blast.move(10,-4)
+        update(60)
+    blast.undraw()
+    boss.move(10,0)
+    time.sleep(0.3)
+    boss.move(-10,0)
+    time.sleep(0.3)
+    boss.move(10,0)
+    time.sleep(0.3)
+    boss.move(-10,0)
+def mLaser():
+    lightning = Line(Point(350, 650),Point(1400, 300))
+    lightning1 = Line(Point(350, 650),Point(1400, 290))
+    lightning2 = Line(Point(350, 650),Point(1400, 310))
+    lightning3 = Line(Point(350, 650),Point(1400, 320))
+    lightning4 = Line(Point(350, 650),Point(1400, 280))
+    lightnings = [lightning, lightning1, lightning2,lightning3,lightning4]
+    drawAll(lightnings)
+    playSound("magiclaser.mp3")
+    for i in range (0, 30):
+        colorAll(lightnings,"purple")
+        time.sleep(0.1)
+        colorAll(lightnings,"blue")
+    undrawAll(lightnings)
+    boss.move(10,0)
+    time.sleep(0.3)
+    boss.move(-10,0)
+    time.sleep(0.3)
+    boss.move(10,0)
+    time.sleep(0.3)
+    boss.move(-10,0)
+def quake():
+    playSound("quake.mp3")
+    for i in range(0,25):
+        background.move(10,10)
+        time.sleep(0.1)
+        background.move(-10,-10)
+        time.sleep(0.1)
+    boss.move(10,0)
+    time.sleep(0.3)
+    boss.move(-10,0)
+    time.sleep(0.3)
+    boss.move(10,0)
+    time.sleep(0.3)
+    boss.move(-10,0)
+def oneShot():
+    playSound("ko.mp3")
+    radius = 50
+    ball = Circle(Point(800,450), radius)
+    ball.draw(win)
+    for i in range (0,60):
+        radius += 10
+        ball.undraw()
+        ball = Circle(Point(800,450), radius)
+        ball.draw(win)
+        update(15)
+    ball.undraw()
+    boss.move(10,0)
+    time.sleep(0.3)
+    boss.move(-10,0)
+    time.sleep(0.3)
+    boss.move(10,0)
+    time.sleep(0.3)
+    boss.move(-10,0)
+    
 win = GraphWin("The Eighth Sin", 1600,900)
+background = Image(Point(800,450), "mtn.png")
+background.draw(win)
 boss = Image(Point(1400, 300), "lust.png")
 boss.draw(win)
 
@@ -75,6 +152,12 @@ select2.draw(win)
 select3.draw(win)
 select4.draw(win)
 
+miss = Text(Point(900, 400), "MISS")
+miss.setFace("courier")
+miss.setTextColor("white")
+miss.setSize(36)
+
+
 alive = True
 HP = 4
 
@@ -86,22 +169,26 @@ while alive == True:
                     if buttonClicked.getY() <= 750:
                         HP -= 1
                         HPstat += 1
+                        mBall()
     if buttonClicked.getX() >= 1075:
             if buttonClicked.getX() <= 1325:
                 if buttonClicked.getY() >= 700:
                     if buttonClicked.getY() <= 750:
+                        mLaser()
                         HP -= 1
                         HPstat += 1
     if buttonClicked.getX() >= 480:
             if buttonClicked.getX() <= 725:
                 if buttonClicked.getY() >= 775:
                     if buttonClicked.getY() <= 825:
+                        quake()
                         HP -= 1
                         HPstat += 1
     if buttonClicked.getX() >= 1075:
             if buttonClicked.getX() <= 1400:
                 if buttonClicked.getY() >= 775:
                     if buttonClicked.getY() <= 825:
+                        oneShot()
                         HP -= 4
                         HPstat += 4 - HPstat
     if HPstat == 1:
@@ -114,4 +201,20 @@ while alive == True:
         hplose4.draw(win)
     if HP == 0:
         alive = False
+
+time.sleep(2)
+blank = Rectangle(Point(0,0),Point(1600,900))
+blank.setFill("white")
+blank.draw(win)
+restart = Text(Point(800, 400), "Restart? (y OR n)")
+restart.setFace("courier")
+restart.setSize(36)
+restart.draw(win)
+keyPressed = win.getKey()
+if keyPressed == "y":
+    os.execl(sys.executable, sys.executable, *sys.argv)
+else:
+    win.close()
+
+    
     
