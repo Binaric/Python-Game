@@ -199,7 +199,7 @@ while alive == True:
         hplose3.draw(win)
     if HPstat == 4:
         hplose4.draw(win)
-    if HP == 0:
+    if HP <= 0:
         alive = False
 
 time.sleep(2)
