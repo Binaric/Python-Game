@@ -22,10 +22,14 @@ def playSound(filename):
     pygame.mixer.music.play()
 
 win = GraphWin("The Eighth Sin", 1600,900)
+background = Image(Point(800,450), "background1.png")
+background.draw(win)
 boss = Image(Point(800, 300), "greed.png")
 boss.draw(win)
 
-items = ["water", "gold", "mansion", "food", "wine", "fame", "money"]
+playSound("battlesong.mp3")
+
+items = ["water", "gold", "mansion", "food", "wine", "fame", "money", "clothes", "robes"]
 yes = 0
 no = 0
 
@@ -33,8 +37,9 @@ optionScreen = Rectangle(Point(200,600),Point(1400,850))
 optionScreen.setFill("white")
 optionScreen.draw(win)
 
-for i in range (0,6):
-    question = Text(Point(800, 700), "Do you want {}? \n ".format(items[i]))
+for i in range (0,9):
+    question = Text(Point(800, 700), "Do you want {}? \n y | n ".format(items[i]))
+    question.setFace("courier")
     question.setSize(36)
     question.draw(win)
     answer = win.getKey()
@@ -46,3 +51,22 @@ for i in range (0,6):
         no += 1
     question.undraw()
 
+if no > yes:
+    congrats = Text(Point(800,700), "NOOOOOOOOOO!")
+    congrats.setSize(36)
+    congrats.setFace("courier")
+    congrats.draw(win)
+    for i in range(0,25):
+        background.move(10,10)
+        time.sleep(0.1)
+        background.move(-10,-10)
+        time.sleep(0.1)
+    blank = Rectangle(Point(0,0),Point(1600,900))
+    blank.setFill("white")
+    blank.draw(win)
+    time.sleep(1)
+    win.close()
+    pygame.mixer.music.stop()
+else:
+    os.execl(sys.executable, sys.executable, *sys.argv)
+    
