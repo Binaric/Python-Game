@@ -22,7 +22,7 @@ def playSound(filename):
     pygame.mixer.music.play()
 
 win = GraphWin("The Eighth Sin", 1600,900)
-background = Image(Point(800,450), "background3.png")
+background = Image(Point(800,450), "mtn.png")
 background.draw(win)
 boss = Image(Point(800, 300), "greed.png")
 boss.draw(win)
